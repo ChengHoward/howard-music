@@ -16,7 +16,7 @@ def net_post(url, data=None, headers=None):
     return requests.post(url,data=data,headers=headers)
 
 def net2_session(index_url_list):
-        session = requests.session()
+    session = requests.session()
     for index_url in index_url_list:
         session.mount(index_url, HTTP20Adapter())
     return session
