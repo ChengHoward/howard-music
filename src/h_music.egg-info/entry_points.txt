@@ -1,0 +1,3 @@
+[console_scripts]
+h-music = h_music.__main__:main
+

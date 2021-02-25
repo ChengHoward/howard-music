@@ -1,0 +1,39 @@
+Metadata-Version: 1.1
+Name: h-music
+Version: 0.1.1
+Summary: howard music
+Home-page: https://github.com/tt20050510
+Author: HowardCheng
+Author-email: 18071131140telephone@gmail.com
+License: UNKNOWN
+Project-URL: Bug Reports, https://github.com/tt20050510/howard-music/issues
+Project-URL: Source, https://github.com/tt20050510/howard-music
+Description: Howard-music
+        ============
+        
+        Baidu.KuGou.KuWo.QQ.163.MiGu API
+        
+        --------------
+        
+        Installation
+        --------------
+        
+        .. code:: console
+        
+            pip install h_music
+        
+        More
+        --------------
+        
+        https://github.com/tt20050510/howard-music
+Keywords: music spider setuptools development
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.1
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
