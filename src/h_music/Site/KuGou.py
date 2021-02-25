@@ -1,9 +1,9 @@
 import json
 import re
 import time
-from Empty import Album, Singer, Song, Result, BaseAlbum, SearchMusic, MusicInfo, Lyric
-from Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
-from Utils import net2_session
+from ..Empty import Album, Singer, Song, BaseAlbum, SearchMusic, MusicInfo, Lyric
+from ..Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
+from ..Utils import net2_session
 
 _MUSIC_KG_SEARCH_PARAMS = {
     "callback": "callback123",

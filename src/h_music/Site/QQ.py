@@ -2,9 +2,9 @@ import base64
 import json
 import re
 import bs4
-from Empty import Album, Singer, Song, Result, BaseAlbum, SearchMusic, MusicInfo, Lyric
-from Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
-from Utils import net_get as _g, net2_session
+from ..Empty import Album, Singer, Song, BaseAlbum, SearchMusic, MusicInfo, Lyric
+from ..Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
+from ..Utils import net_get as _g, net2_session
 
 _MUSIC_QQ_DOWNLOAD_HEADERS = {
     # ":authority": "u.y.qq.com",

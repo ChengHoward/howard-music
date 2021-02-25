@@ -1,6 +1,6 @@
-from Empty.SongEmpty import Song
-from Empty.BaseAlbumEmpty import BaseEmpty
-from Empty.SingerEmpty import Singer
+from ..Empty.SongEmpty import Song
+from ..Empty.BaseAlbumEmpty import BaseEmpty
+from ..Empty.SingerEmpty import Singer
 
 
 class Album(BaseEmpty):

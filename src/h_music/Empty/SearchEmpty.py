@@ -1,5 +1,5 @@
-from Empty.SongEmpty import  Song
-from Empty.BaseEmpty import  BaseEmpty
+from ..Empty.SongEmpty import  Song
+from ..Empty.BaseEmpty import  BaseEmpty
 
 
 class SearchMusic(BaseEmpty):

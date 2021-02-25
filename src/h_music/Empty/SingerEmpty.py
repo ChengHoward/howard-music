@@ -1,4 +1,4 @@
-from Empty.BaseEmpty import BaseEmpty
+from ..Empty.BaseEmpty import BaseEmpty
 
 class Singer(BaseEmpty):
     def __init__(self, _dic=None):

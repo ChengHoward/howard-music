@@ -1,11 +1,9 @@
-import os
-
-from Site.KuGou import KuGou
-from Site.KuWo import KuWo
-from Site.MiGu import MiGu
-from Site.NetEase import NetEase
-from Site.QQ import QQ
-from Site.QianQian import QianQian
+from src.h_music.Site import KuGou
+from src.h_music.Site import KuWo
+from src.h_music.Site import MiGu
+from src.h_music.Site import NetEase
+from src.h_music.Site.QQ import QQ
+from src.h_music.Site import QianQian
 
 if __name__ == '__main__':
     kw = KuWo()
@@ -36,4 +34,4 @@ if __name__ == '__main__':
 
     # print(qian.search("演员").data.to_json())
     # print(qian.album("P10001774541").data.to_json())
-    print(qian.detail("T10040589088").data.to_json())
+    # print(qian.detail("T10040589088").data.to_json())

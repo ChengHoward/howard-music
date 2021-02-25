@@ -3,10 +3,10 @@ import re
 import time
 import uuid
 import bs4
-from Empty import Album, Singer, Song, Result, BaseAlbum, SearchMusic, MusicInfo, Lyric
-from Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
-from Utils import net_get as _g, net2_session
-from Utils import _MM_TO_MIN
+from ..Empty import Album, Singer, Song, BaseAlbum, SearchMusic, MusicInfo, Lyric
+from ..Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
+from ..Utils import net_get as _g, net2_session
+from ..Utils import _MM_TO_MIN
 
 
 class KuWo(object):

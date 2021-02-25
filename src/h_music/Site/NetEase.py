@@ -7,9 +7,9 @@ import time
 import bs4
 from Crypto.Cipher import AES
 
-from Empty import Album, Singer, Song, Result, BaseAlbum, SearchMusic, MusicInfo, Lyric
-from Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
-from Utils.request import net_get as _g, net_post as _p, net2_session
+from ..Empty import Album, Singer, Song, BaseAlbum, SearchMusic, MusicInfo, Lyric
+from ..Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
+from ..Utils.request import net_get as _g, net_post as _p, net2_session
 
 
 class NetEase(object):

@@ -1,8 +1,8 @@
 import json
 import re
-from Empty import Album, Singer, Song, Result, BaseAlbum, SearchMusic, MusicInfo, Lyric
-from Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
-from Utils import net_get as _g, net_post as _p, net2_session
+from ..Empty import Album, Singer, Song, BaseAlbum, SearchMusic, MusicInfo, Lyric
+from ..Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
+from ..Utils import net_get as _g, net2_session
 
 _MUSIC_MG_SEARCH_HEADERS = {
     "Accept": "application/json, text/javascript, */*; q=0.01",

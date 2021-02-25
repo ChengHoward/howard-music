@@ -2,9 +2,9 @@ import json
 import re
 import time
 import bs4
-from Empty import Album, Singer, Song, Result, BaseAlbum, SearchMusic, MusicInfo, Lyric
-from Utils import net_get as _g, net2_session
-from Utils import  _MIN_TO_MM
+from ..Empty import Album, Singer, Song, Result, BaseAlbum, SearchMusic, MusicInfo, Lyric
+from ..Utils import net_get as _g, net2_session
+from ..Utils import  _MIN_TO_MM
 
 _MUSIC_BD_SEARCH_HEADERS = {
     ":authority": "music.taihe.com",

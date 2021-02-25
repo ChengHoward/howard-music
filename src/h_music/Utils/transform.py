@@ -24,5 +24,3 @@ def _STR_TO_FILE_NAME_(title):
     for c in error_set:
         title = str(title).replace(c,"")
     return title
-
-print(_MIN_TO_MS("04:06.11"))

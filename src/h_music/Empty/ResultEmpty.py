@@ -1,7 +1,7 @@
-from Empty.SearchEmpty import SearchMusic
-from Empty.AlbumEmpty import Album
-from Empty.BaseEmpty import BaseEmpty
-from Empty.MusicInfoEmpty import MusicInfo
+from ..Empty.SearchEmpty import SearchMusic
+from ..Empty.AlbumEmpty import Album
+from ..Empty.BaseEmpty import BaseEmpty
+from ..Empty.MusicInfoEmpty import MusicInfo
 
 
 class Result(BaseEmpty):

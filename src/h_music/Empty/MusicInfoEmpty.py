@@ -1,6 +1,6 @@
-from Empty.LyricEmpty import Lyric
-from Empty.BaseEmpty import BaseEmpty
-from Empty.SingerEmpty import Singer
+from ..Empty.LyricEmpty import Lyric
+from ..Empty.BaseEmpty import BaseEmpty
+from ..Empty.SingerEmpty import Singer
 
 
 class MusicInfo(BaseEmpty):

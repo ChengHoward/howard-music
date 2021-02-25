@@ -1,6 +1,6 @@
-from Empty.BaseAlbumEmpty import BaseAlbum
-from Empty.SingerEmpty import Singer
-from Empty.BaseEmpty import BaseEmpty
+from ..Empty.BaseAlbumEmpty import BaseAlbum
+from ..Empty.SingerEmpty import Singer
+from ..Empty.BaseEmpty import BaseEmpty
 
 class Song(BaseEmpty):
     def __init__(self, _dic=None):
