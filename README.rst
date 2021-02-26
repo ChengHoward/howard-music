@@ -10,7 +10,7 @@ Installation
 
 .. code:: console
 
-    pip install h_music
+    pip install h-music
 
 More
 --------------

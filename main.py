@@ -2,7 +2,7 @@ from src.h_music.Site import KuGou
 from src.h_music.Site import KuWo
 from src.h_music.Site import MiGu
 from src.h_music.Site import NetEase
-from src.h_music.Site.QQ import QQ
+from src.h_music.Site import QQ
 from src.h_music.Site import QianQian
 
 if __name__ == '__main__':
@@ -12,6 +12,9 @@ if __name__ == '__main__':
     ne = NetEase()
     mg = MiGu()
     qian = QianQian()
+
+    print(qq.search("薛之谦").to_json())
+    # 完整示例
     # print(kw.search("alan").data.to_json())
     # print(kw.album("album").data.to_json())
     # print(kw.detail("40171818").data.to_json())
