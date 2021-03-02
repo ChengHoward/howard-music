@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: h-music
-Version: 0.1.1
+Version: 0.1.2
 Summary: howard music
 Home-page: https://github.com/tt20050510
 Author: HowardCheng
@@ -20,7 +20,7 @@ Description: Howard-music
         
         .. code:: console
         
-            pip install h_music
+            pip install h-music
         
         More
         --------------

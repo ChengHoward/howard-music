@@ -47,7 +47,7 @@ class NetEase(object):
         encseckey = self._rsa(secret, PUBKEY, MODULUS)
         return {"params": params, "encSecKey": encseckey}
 
-    def search(self, _text="", page=1, limit=20) -> ResultSearchMusic:
+    def search(self, _text, page=1, limit=20) -> ResultSearchMusic:
         try:
             res = json.loads(_p("http://music.163.com/api/search/pc", data={
                 'limit': limit,
@@ -117,7 +117,7 @@ class NetEase(object):
         except:
             return ResultAlbum(None, False)
 
-    def detail(self, id="") -> ResultMusicInfo:
+    def detail(self, id) -> ResultMusicInfo:
         try:
             # Play URL
             res = _p("http://music.163.com/weapi/song/enhance/player/url", data=self._encrypted_request({

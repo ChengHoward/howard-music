@@ -8,12 +8,21 @@ from ..Empty import ResultSearchMusic, ResultAlbum, ResultMusicInfo
 from ..Utils import net_get as _g, net2_session
 from ..Utils import _MM_TO_MIN
 
+_KUWO_SEARCH_HEADER = {
+    "Origin": "search.kuwo.cn",
+    "Referer": "search.kuwo.cn",
+    "Host": "search.kuwo.cn",
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8"
+}
+
 
 class KuWo(object):
     def __init__(self):
         self.session = net2_session(["https://www.kuwo.cn/", ])
 
-    def search(self, _text="", page=1, limit=20) -> ResultSearchMusic:
+    def search(self, _text, page=1, limit=20) -> ResultSearchMusic:
         _p = page - 1 if page >= 1 else page
         try:
             res = re.findall(r'^try\{var jsondata=(\{.*?\})\n;', _g("http://search.kuwo.cn/r.s", data={
@@ -28,27 +37,20 @@ class KuWo(object):
                 "callback": "searchMusicResult",
                 "encoding": "utf8",
                 "r": int(time.time())
-            }, headers={
-                "Origin": "search.kuwo.cn",
-                "Referer": "search.kuwo.cn",
-                "Host": "search.kuwo.cn",
-                "Accept": "application/json, text/plain, */*",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8"
-            }).text)
+            }, headers=_KUWO_SEARCH_HEADER).text)
             res = eval(res[0])
             _data = SearchMusic({
                 "songs": [Song({
                     "id": str(_.get("MUSICRID")).replace("MUSIC_", ""),
-                    "name": str(_.get("SONGNAME")).replace("&nbsp;"," "),
+                    "name": str(_.get("SONGNAME")).replace("&nbsp;", " "),
                     "duration": _.get("DURATION", 0),
                     "album": BaseAlbum({
                         "id": _.get("ALBUMID"),
-                        "name": _.get("ALBUM").replace("&nbsp;"," "),
+                        "name": _.get("ALBUM").replace("&nbsp;", " "),
                     }),
                     "singers": [Singer({
                         "id": _.get("ARTISTID"),
-                        "name": str(_.get("ARTIST")).replace("&nbsp;"," "),
+                        "name": str(_.get("ARTIST")).replace("&nbsp;", " "),
                     })],
                 }) for _ in res.get("abslist", [])],
                 "page": page,
@@ -59,25 +61,18 @@ class KuWo(object):
         except:
             return ResultSearchMusic(None, False)
 
-    def album(self, id) -> ResultAlbum:
+    def album(self, albumid) -> ResultAlbum:
         try:
             res = _g("http://search.kuwo.cn/r.s", data={
                 "pn": "0",
                 "rn": "1000",
                 "stype": "albuminfo",
-                "albumid": id,
+                "albumid": albumid,
                 "alflac": "1",
                 "pcmp4": "1",
                 "encoding": "utf8",
                 "vipver": "MUSIC_8.7.7.0_W4"
-            }, headers={
-                "Origin": "search.kuwo.cn",
-                "Referer": "search.kuwo.cn",
-                "Host": "search.kuwo.cn",
-                "Accept": "application/json, text/plain, */*",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8"
-            }).text
+            }, headers=_KUWO_SEARCH_HEADER).text
             res = eval(res)
             _data = Album({
                 "id": res.get("albumid"),
@@ -105,7 +100,7 @@ class KuWo(object):
         except BaseException as base:
             return ResultAlbum(None, state=False)
 
-    def detail(self, id="") -> ResultMusicInfo:
+    def detail(self, id) -> ResultMusicInfo:
         try:
             # 获取音乐地址
             res = _g("http://player.kuwo.cn/webmusic/st/getNewMuiseByRid?rid=MUSIC_" + id)
@@ -122,7 +117,7 @@ class KuWo(object):
             })
             res = json.loads(res.text)
             data = res.get("data", {})
-            lrclist = data.get("lrclist",[])
+            lrclist = data.get("lrclist", [])
             try:
                 mp3 = _xml.select("mp3dl")[0].text + _xml.select("mp3path")[0].text
             except:
@@ -133,7 +128,7 @@ class KuWo(object):
                 aac = ""
             _data = MusicInfo({
                 "id": data.get("songinfo", {}).get("id", ""),
-                "name": str(data.get("songinfo", {}).get("songName", "")).replace("&nbsp;"," "),
+                "name": str(data.get("songinfo", {}).get("songName", "")).replace("&nbsp;", " "),
                 "mp3_url": mp3,
                 "music_url": aac,
                 "pics": [
@@ -143,8 +138,8 @@ class KuWo(object):
                                   "time": _MM_TO_MIN(_.get("time", ""))}) for _ in
                            lrclist],
                 "singers": [Singer({
-                    "id": data.get("songinfo", {}).get("artistId",""),
-                    "name": data.get("songinfo", {}).get("artist",""),
+                    "id": data.get("songinfo", {}).get("artistId", ""),
+                    "name": data.get("songinfo", {}).get("artist", ""),
                     "pics": [data.get("songinfo", {}).get("pic", "")]
                 })],
             })

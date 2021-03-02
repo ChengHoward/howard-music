@@ -9,18 +9,30 @@ def _MM_TO_MIN(mm):
 
 def _MIN_TO_MM(min):
     "2:20"
-    min, s = str(min).split(":")
-    return int(min) * 60 + int(s)
+    sp = str(min).split(":")
+    if len(sp) == 3:
+        hour, min, s = sp
+        return int(hour) * 60 * 60 + int(min) * 60 + int(s)
+    elif len(sp) == 2:
+        min, s = sp
+        return int(min) * 60 + int(s)
+
 
 def _MIN_TO_MS(min):
     "2:20.11"
-    min, s = str(min).split(":")
-    s,ms = str(s).split(".")
-    return int(min) * 60 + int(s)+float(ms) / 100
+    sp = str(min).split(":")
+    if len(sp) == 3:
+        hour, min, s = sp
+        s, ms = str(s).split(".")
+        return int(hour) * 60 * 60 + int(min) * 60 + int(s) + float(ms) / 100
+    elif len(sp) == 2:
+        min, s = sp
+        s, ms = str(s).split(".")
+        return int(min) * 60 + int(s) + float(ms) / 100
 
 
 def _STR_TO_FILE_NAME_(title):
     error_set = ['/', '\\', ':', '*', '?', '"', '|', '<', '>']
     for c in error_set:
-        title = str(title).replace(c,"")
+        title = str(title).replace(c, "")
     return title

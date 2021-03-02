@@ -101,7 +101,7 @@ class QQ(object):
     def __init__(self):
         self.session = net2_session(["https://y.qq.com/",])
 
-    def search(self, _text="", page=1, limit=20) -> ResultSearchMusic:
+    def search(self, _text, page=1, limit=20) -> ResultSearchMusic:
         _MUSIC_QQ_SEARCH_PARAMS.update({
             "perpage": limit,
             "n": limit,
@@ -175,7 +175,7 @@ class QQ(object):
         except BaseException as base:
             return ResultAlbum(None, False)
 
-    def detail(self, id="") -> ResultMusicInfo:
+    def detail(self, id) -> ResultMusicInfo:
         # songmid
         try:
             # 音乐源地址

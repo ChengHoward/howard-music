@@ -42,7 +42,7 @@ class MiGu(object):
     def __init__(self):
         self.session = net2_session(["https://music.migu.cn/"])
 
-    def search(self, _text="", page=1, limit=20) -> ResultSearchMusic:
+    def search(self, _text, page=1, limit=20) -> ResultSearchMusic:
         try:
             res = _g("https://m.music.migu.cn/migu/remoting/scr_search_tag"
                      "?rows=" + str(limit) + "&type=2&keyword=" + _text + "&pgc=" + str(page),
@@ -122,7 +122,7 @@ class MiGu(object):
         except BaseException as base:
             return ResultAlbum(None, False)
 
-    def detail(self, id, oid) -> ResultMusicInfo:
+    def detail(self, id, oid = None) -> ResultMusicInfo:
         try:
             # 获取音乐地址
             res = _g("https://app.c.nf.migu.cn/MIGUM2.0/v2.0/content/listen-url", data={
@@ -141,10 +141,15 @@ class MiGu(object):
                 "uid": "1234",
             })
             play = json.loads(res.text)
-            res = _g("https://m.music.migu.cn/migu/remoting/cms_detail_tag", data={"cpid": oid},
-                     headers=_MUSIC_MG_SEARCH_HEADERS)
-            res = json.loads(res.text)
-            lrc = res.get("data", {}).get("lyricLrc", "")
+            lyrics = []
+            if oid is not None:
+                res = _g("https://m.music.migu.cn/migu/remoting/cms_detail_tag", data={"cpid": oid},
+                         headers=_MUSIC_MG_SEARCH_HEADERS)
+                res = json.loads(res.text)
+                lrc = res.get("data", {}).get("lyricLrc", "")
+                lyrics = [Lyric({"line": _[1],
+                                      "time": _[0]}) for _ in
+                               re.findall(r'\[([0-9]{2}:[0-9]{2}.[0-9]*?)\](.*?)\n', lrc)]
             _data = MusicInfo({
                 "id": id,
                 "name": play.get("data", {}).get("songItem", {}).get("songName"),
@@ -153,9 +158,7 @@ class MiGu(object):
                 "pics": [
                     _.get("img", "") for _ in play.get("data", {}).get("songItem", {}).get("albumImgs", [])
                 ],
-                "lyrics": [Lyric({"line": _[1],
-                                  "time": _[0]}) for _ in
-                           re.findall(r'\[([0-9]{2}:[0-9]{2}.[0-9]*?)\](.*?)\n', lrc)],
+                "lyrics": lyrics,
                 "singers": [Singer({
                     "id": _.get("id"),
                     "name": _.get("name"),

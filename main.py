@@ -13,10 +13,9 @@ if __name__ == '__main__':
     mg = MiGu()
     qian = QianQian()
 
-    print(qq.search("薛之谦").to_json())
     # 完整示例
     # print(kw.search("alan").data.to_json())
-    # print(kw.album("album").data.to_json())
+    # print(kw.album("4974851").data.to_json())
     # print(kw.detail("40171818").data.to_json())
 
     # print(kg.search("alan").data.to_json())
@@ -38,3 +37,8 @@ if __name__ == '__main__':
     # print(qian.search("演员").data.to_json())
     # print(qian.album("P10001774541").data.to_json())
     # print(qian.detail("T10040589088").data.to_json())
+
+
+
+
+

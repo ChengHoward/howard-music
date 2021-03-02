@@ -51,7 +51,7 @@ class KuGou(object):
     def __init__(self):
         self.session = net2_session(["http://m.kugou.com/", "https://m3ws.kugou.com/"])
 
-    def search(self, _text="", page=1, limit=30) -> ResultSearchMusic:
+    def search(self, _text, page=1, limit=30) -> ResultSearchMusic:
         # `ID ` use 'hash`
         try:
             _MUSIC_KG_SEARCH_PARAMS.update({

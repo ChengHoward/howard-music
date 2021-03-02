@@ -24,6 +24,7 @@ D:\>h-music
 ```
 
 ## 获取API
+更多功能请参阅[详细API](https://437983438.gitbook.io/spidernotes/yin-le-zhan-shu-ju-api/yin-le-zhan-apipython)
 ```python
 from h_music.Site import QQ
 
