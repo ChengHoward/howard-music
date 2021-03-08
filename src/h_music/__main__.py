@@ -1,8 +1,8 @@
+import getopt
 import json
 import os
 import sys
 import base64
-import re
 from typing import Dict, Any
 from .Utils import prettytable as pt, _STR_TO_FILE_NAME_
 from .Utils import net_get as _g
@@ -42,7 +42,7 @@ def id_encode(text):
         return []
 
 
-def printFormat(datas,_TYPE, count=0, page=1):
+def printFormat(datas, _TYPE, count=0, page=1):
     if _TYPE == "json":
         print(json.dumps({
             "count": count,
@@ -51,7 +51,7 @@ def printFormat(datas,_TYPE, count=0, page=1):
                 "info": _
             } for _ in datas]
         }, ensure_ascii=True))
-    elif _TYPE == "format":
+    elif _TYPE == "table":
         tb = pt.PrettyTable()
         tb.field_names = ["名称", "歌手", "时长", "id", "来源"]
         for _ in datas:
@@ -68,10 +68,10 @@ def printFormat(datas,_TYPE, count=0, page=1):
         print(tb)
 
 
-def printFormatDetail(data,_TYPE):
+def printFormatDetail(data, _TYPE):
     if _TYPE == "json":
         print(json.dumps(data, ensure_ascii=True))
-    elif _TYPE == "format":
+    elif _TYPE == "table":
         tb = pt.PrettyTable()
         tb.title = "详细信息"
         tb.field_names = ["歌曲名", data.get("name")]
@@ -93,7 +93,7 @@ def printFormatError(_TYPE):
         print(json.dumps({
             "code": 0
         }, ensure_ascii=True))
-    elif _TYPE == "format":
+    elif _TYPE == "table":
         tb = pt.PrettyTable()
         tb.field_names = ["错误"]
         tb.add_row(["无法获取"])
@@ -101,8 +101,8 @@ def printFormatError(_TYPE):
 
 
 def main(**kwargs):
-    dataType = ["json", "format"]
-    _TYPE = "format"
+    dataType = ["json", "table"]
+    _TYPE = "table"
     _SEARCH = None
     _CUR_CODE = None
     _SOURCE_CLS = None
@@ -115,92 +115,89 @@ def main(**kwargs):
     _DOWNLOAD_PATH = os.path.expanduser('~') + "\\Music\\"
     _MUSIC_DATA = None
     _ALBUM = None
-    argv = sys.argv
-    _HELP_TEXT = """
-        -v show version
-        -s search music
-        -p page default `1`
-        -d download(URL) and lyric 
-        -a album only `json` data
-        -t dataType `json` `format`
-        -S Music Source `KG` `BD` `163` `QQ` `KW` `MG`
-            `-S` is empty to query all resources. `-p` is invalid.
-        -D Download MP3
-        示例：alan_walker -S 163
-        """
+    argv = sys.argv[1:]
+    _HELP_TEXT = pt.PrettyTable()
+    _HELP_TEXT.field_names = ["option", "use", "arg"]
+    _HELP_TEXT.add_row(["-v --version","", "查看版本信息"])
+    _HELP_TEXT.add_row(["-h --help","", "查看帮助文本"])
+    _HELP_TEXT.add_row(["-s --search=<text>","h-music -s xxx or h-music xxx", "搜索文本(选用)"])
+    _HELP_TEXT.add_row(["-p --page=<number>","h-music -s xxx -S 163 page 1", "搜索分页\n(需要配合--source使用)"])
+    _HELP_TEXT.add_row(["-d --detail=<id>","h-music -d <id>", "查看详细信息\n(包含艺术家、歌曲名称、歌词、源地址)"])
+    _HELP_TEXT.add_row(["-a --album=<id>","h-music -a <id>", "查看专辑详细信息(仅支持json格式)"])
+    _HELP_TEXT.add_row(["-t --type=<`json`,`table`>","h-music xxx -t json", "输出格式，支持`json`和`table`"])
+    _HELP_TEXT.add_row(["-S --source=<`kg`,`bd`,`163`,`qq`,`kw`,`mg`>","h-music xxx -s 163", "搜索源"])
+    _HELP_TEXT.add_row(["-D --download","h-music -d <id> -D", "保存源文件，在--detail时生效"])
+    _HELP_TEXT.add_row(["-P --download_path=<dir_path>","h-music -d <id> -D -P D:", "源文件保存路径\n(它可以包含--download但必须有参数)"])
+    _HELP_TEXT.add_row(["","","示例：h-music alan_walker -S 163"])
+    _HELP_TEXT.valign = "m"
+    _HELP_TEXT.align = "l"
+
     #######################################
     len_code = len(argv)
-    if len_code == 1:
+
+    if len_code == 0 or (len_code == 1 and argv[0] in ['-h','--help']):
         print(_HELP_TEXT)
         sys.exit(0)
-
-    i = 0
-    # 命令解析
-    for _ in argv[1:]:
-        if _CUR_CODE:
-            if _CUR_CODE == "search":
-                _SEARCH = _.replace("_", "")
-            if _CUR_CODE == "page":
-                try:
-                    _PAGE = int(_)
-                except:
-                    print("`%s` is the wrong number type" % _)
-            if _CUR_CODE == "type":
-                if not _ in dataType:
-                    print("data type '%s' does not exist" % _)
-                    sys.exit(0)
-                _TYPE = _
-            elif _CUR_CODE == "source":
-                _ = _.lower()
-                if not _ in source.keys():
-                    print("source '%s' does not exist" % _)
-                    sys.exit(0)
-                _SOURCE_CLS = source.get(_)
-                _SOURCE_CLS_NAME = _
-            elif _CUR_CODE == "detail":
-                _DETAIL = True
-                _DETAIL_TEXT = _
-            elif _CUR_CODE == "album":
-                _DETAIL_TEXT = _
-            elif _CUR_CODE == "download":
-                try:
-                    _DOWNLOAD_PATH = _
-                except:
-                    print("`%s` is the wrong number type" % _)
-            _CUR_CODE = None
-        else:
-            _c = re.findall(r'^-(.*?)$', _)
-            if len(_c) > 0:
-                _c = code.get(_c[0])
-            if _c == "search":
-                _CUR_CODE = _c
-            elif _c == "type":
-                _CUR_CODE = _c
-            elif _c == "source":
-                _CUR_CODE = _c
-            elif _c == "detail":
-                _CUR_CODE = _c
-            elif _c == "page":
-                _CUR_CODE = _c
-            elif _c == "download":
-                _DOWNLOAD = True
-            elif _c == "album":
-                _CUR_CODE = _c
-                _ALBUM = True
-            elif _c == "version":
-                tb = pt.PrettyTable()
-                tb.field_names = ["version", "h_music. 20201213"]
-                tb.add_row(["******", "Howardyun.top"])
-                tb.add_row(["              ", "请勿商用"])
-                print(tb)
+    else:
+        if not argv[0] in "-s:-v:-a:-d:-S:-t:-D:-p:-h:".split(":"):
+            _SEARCH = argv[0].replace("_", "")
+            del argv[0]
+    #######################################
+    try:
+        opts, args = getopt.getopt(argv, "-s:-v-a:-d:-S:-t:-P:-D-p:-h:",
+                                   ["text", "version", "album=", "detail=", "source=", "type=", "download_path",
+                                    "download", "page",
+                                    "help"])
+    except getopt.GetoptError:
+        print(_HELP_TEXT)
+        sys.exit(2)
+    #######################################
+    # print(opts)
+    for opt, arg in opts:
+        # print("opt:%s, arg:%s" % (opt, arg,))
+        if opt == '-v':
+            tb = pt.PrettyTable()
+            tb.field_names = ["version", "h_music. 20201213"]
+            tb.add_row(["******", "Howardyun.top"])
+            tb.add_row(["              ", "请勿商用"])
+            print(tb)
+            sys.exit(0)
+        elif opt in ("-s", "--text"):
+            _SEARCH = arg.replace("_", "")
+        elif opt in ("-p", "--page"):
+            try:
+                _PAGE = int(arg)
+            except:
+                print("`%s` is the wrong number type" % arg)
+        elif opt in ("-t", "--type"):
+            if not arg in dataType:
+                print("data type '%s' does not exist" % arg)
                 sys.exit(0)
+            _TYPE = arg
+        elif opt in ("-S", "--Source"):
+            arg = arg.lower()
+            if not arg in source.keys():
+                print("source '%s' does not exist" % arg)
+                sys.exit(0)
+            _SOURCE_CLS = source.get(arg)
+            _SOURCE_CLS_NAME = arg
+        elif opt in ("-d", "--detail"):
+            _DETAIL = True
+            _DETAIL_TEXT = arg
+        elif opt in ("-a", "--album"):
+            _ALBUM = True
+            _DETAIL_TEXT = arg
+        elif opt in ("-D", "--download"):
+            _DOWNLOAD = True
+        elif opt in ("-P", "--download_path"):
+            _DOWNLOAD = True
+            if os.path.isdir(arg):
+                _DOWNLOAD_PATH = arg
             else:
-                if i == 0:
-                    _SEARCH = _
-                else:
-                    print("command '%s' does not exist" % _)
-                    sys.exit(0)
-        i += 1
+                print("path `%s` does not exist" % arg)
+                sys.exit(0)
+        else:
+            print("command '%s' does not exist" % opt)
 
     if _SEARCH is not None:
         data = []
@@ -210,7 +207,7 @@ def main(**kwargs):
                 for _ in res.data.to_dict().get("songs"):
                     _.update({"source": _SOURCE_CLS_NAME})
                     data.append(_)
-                printFormat(data,_TYPE, res.data.songCount, res.data.page)
+                printFormat(data, _TYPE, res.data.songCount, res.data.page)
             else:
                 printFormatError(_TYPE)
 
@@ -223,7 +220,7 @@ def main(**kwargs):
                         data.append(_)
                 else:
                     printFormatError(_TYPE)
-            printFormat(data,_TYPE)
+            printFormat(data, _TYPE)
 
 
     elif _DETAIL and _DETAIL is not None:
@@ -237,7 +234,7 @@ def main(**kwargs):
             elif ss[1] in ["mg"]:
                 res = m.detail(ss[0], ss[3])
             if res.state:
-                printFormatDetail(res.data.to_dict(),_TYPE)
+                printFormatDetail(res.data.to_dict(), _TYPE)
                 _MUSIC_DATA = res.data.to_dict()
             else:
                 printFormatError(_TYPE)
@@ -246,13 +243,17 @@ def main(**kwargs):
             sys.exit(0)
     if _DOWNLOAD:
         if _MUSIC_DATA is not None:
-            content = _g(_MUSIC_DATA.get("mp3_url")).content
+            mp3_url = _MUSIC_DATA.get("mp3_url")
+            if mp3_url is not None and not mp3_url[:4] == "http":
+                mp3_url = "http://" + mp3_url
+            content = _g(mp3_url).content
             _FILE_NAME = " ".join(
                 [_MUSIC_DATA.get("name"), "-", "&".join([_.get("name") for _ in _MUSIC_DATA.get("singers", [])])])
             _FILE_NAME = _STR_TO_FILE_NAME_(_FILE_NAME)
-            with open(_DOWNLOAD_PATH + _FILE_NAME + ".mp3", mode="wb") as wb:
+            _SAVE_FILE_PATH = os.path.join(_DOWNLOAD_PATH, _FILE_NAME + ".mp3")
+            with open(_SAVE_FILE_PATH, mode="wb") as wb:
                 wb.write(content)
-            print("Download -> " + _DOWNLOAD_PATH + _FILE_NAME + ".mp3")
+            print("Download -> " + _SAVE_FILE_PATH)
         else:
             print("Need the support of '-d'")
             print("as -d xxx -D")

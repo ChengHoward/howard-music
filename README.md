@@ -10,17 +10,25 @@ pip install h-music
 
 ## 命令行
 ```console
-D:\>h-music
-
-    -v show version
-    -s search music
-    -p page default `1`
-    -d download and lyric (URL)
-    -t dataType `json` `format`
-    -S Music Source `KG` `BD` `163` `QQ` `KW` `MG`
-        `-S` is empty to query all resources. `-p` is invalid.
-    -D Download MP3
-    示例：alan_walker -S 163
+D:\>h-music -h
++----------------------------------------------+-------------------------------+--------------------------------------+
+| option                                       | use                           | arg                                  |
++----------------------------------------------+-------------------------------+--------------------------------------+
+| -v --version                                 |                               | 查看版本信息                         |
+| -h --help                                    |                               | 查看帮助文本                         |
+| -s --search=<text>                           | h-music -s xxx or h-music xxx | 搜索文本(选用)                       |
+| -p --page=<number>                           | h-music -s xxx -S 163 page 1  | 搜索分页                             |
+|                                              |                               | (需要配合--source使用)               |
+| -d --detail=<id>                             | h-music -d <id>               | 查看详细信息                         |
+|                                              |                               | (包含艺术家、歌曲名称、歌词、源地址) |
+| -a --album=<id>                              | h-music -a <id>               | 查看专辑详细信息(仅支持json格式)     |
+| -t --type=<`json`,`table`>                   | h-music xxx -t json           | 输出格式，支持`json`和`table`        |
+| -S --source=<`kg`,`bd`,`163`,`qq`,`kw`,`mg`> | h-music xxx -s 163            | 搜索源                               |
+| -D --download                                | h-music -d <id> -D            | 保存源文件，在--detail时生效         |
+| -P --download_path=<dir_path>                | h-music -d <id> -D -P D:      | 源文件保存路径                       |
+|                                              |                               | (它可以包含--download但必须有参数)   |
+|                                              |                               | 示例：h-music alan_walker -S 163     |
++----------------------------------------------+-------------------------------+--------------------------------------+
 ```
 
 ## 获取API

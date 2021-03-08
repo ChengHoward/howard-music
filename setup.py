@@ -11,7 +11,7 @@ except:
 
 setup(
     name='h_music',
-    version='0.1.2',
+    version='0.1.3',
     description='howard music',
     packages=find_packages('src'),
     package_dir={'': 'src'},

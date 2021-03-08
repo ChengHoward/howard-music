@@ -4,3 +4,6 @@ from .Site import MiGu
 from .Site import NetEase
 from .Site import QianQian
 from .Site import QQ
+from .Utils import prettytable
+from .Utils import transform
+from .Utils import request
