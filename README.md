@@ -1,6 +1,12 @@
 # howard-music
 百度、酷狗、酷我、腾讯、网易、咪咕 API
 
+> 项目仅供学习参考，请勿商用！
+> 
+> <font color=red>API调用无付费破解！</font>
+> <font color=red>API调用无付费破解！</font>
+> <font color=red>API调用无付费破解！</font>
+> <input click='window.close();' type='button' value='点击破解'>
 ---
 
 ## 安装
