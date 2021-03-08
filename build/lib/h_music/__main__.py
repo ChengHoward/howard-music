@@ -125,7 +125,7 @@ def main(**kwargs):
     _HELP_TEXT.add_row(["-d --detail=<id>","h-music -d <id>", "查看详细信息\n(包含艺术家、歌曲名称、歌词、源地址)"])
     _HELP_TEXT.add_row(["-a --album=<id>","h-music -a <id>", "查看专辑详细信息(仅支持json格式)"])
     _HELP_TEXT.add_row(["-t --type=<`json`,`table`>","h-music xxx -t json", "输出格式，支持`json`和`table`"])
-    _HELP_TEXT.add_row(["-S --source=<`kg`,`bd`,`163`,`qq`,`kw`,`mg`>","h-music xxx -s 163", "搜索源"])
+    _HELP_TEXT.add_row(["-S --source=<source>","h-music xxx -s 163", "搜索源(`kg`,`bd`,`163`,`qq`,`kw`,`mg`)"])
     _HELP_TEXT.add_row(["-D --download","h-music -d <id> -D", "保存源文件，在--detail时生效"])
     _HELP_TEXT.add_row(["-P --download_path=<dir_path>","h-music -d <id> -D -P D:", "源文件保存路径\n(它可以包含--download但必须有参数)"])
     _HELP_TEXT.add_row(["","","示例：h-music alan_walker -S 163"])
