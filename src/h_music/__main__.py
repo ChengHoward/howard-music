@@ -99,6 +99,12 @@ def printFormatError(_TYPE):
         tb.add_row(["无法获取"])
         print(tb)
 
+def out_version():
+    tb = pt.PrettyTable()
+    tb.field_names = ["version", "h_music. 20210309"]
+    tb.add_row(["******", "ipyhub.top"])
+    tb.add_row(["              ", "请勿商用"])
+    print(tb)
 
 def main(**kwargs):
     dataType = ["json", "table"]
@@ -139,9 +145,12 @@ def main(**kwargs):
         print(_HELP_TEXT)
         sys.exit(0)
     else:
-        if not argv[0] in "-s:-v:-a:-d:-S:-t:-D:-p:-h:".split(":"):
+        if not argv[0] in "-s:-v:-a:-d:-S:-t:-D:-p:-h:--help:--version".split(":"):
             _SEARCH = argv[0].replace("_", "")
             del argv[0]
+        elif argv[0] in "-v:--version".split(":"):
+            out_version()
+            sys.exit(0)
     #######################################
     try:
         opts, args = getopt.getopt(argv, "-s:-v-a:-d:-S:-t:-P:-D-p:-h:",
@@ -156,11 +165,7 @@ def main(**kwargs):
     for opt, arg in opts:
         # print("opt:%s, arg:%s" % (opt, arg,))
         if opt == '-v':
-            tb = pt.PrettyTable()
-            tb.field_names = ["version", "h_music. 20201213"]
-            tb.add_row(["******", "Howardyun.top"])
-            tb.add_row(["              ", "请勿商用"])
-            print(tb)
+            out_version()
             sys.exit(0)
         elif opt in ("-s", "--text"):
             _SEARCH = arg.replace("_", "")

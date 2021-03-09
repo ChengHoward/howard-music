@@ -139,9 +139,16 @@ def main(**kwargs):
         print(_HELP_TEXT)
         sys.exit(0)
     else:
-        if not argv[0] in "-s:-v:-a:-d:-S:-t:-D:-p:-h:".split(":"):
+        if not argv[0] in "-s:-v:-a:-d:-S:-t:-D:-p:-h:--help:--version".split(":"):
             _SEARCH = argv[0].replace("_", "")
             del argv[0]
+        elif argv[0] in "-v:--version".split(":"):
+            tb = pt.PrettyTable()
+            tb.field_names = ["version", "h_music. 20201213"]
+            tb.add_row(["******", "Howardyun.top"])
+            tb.add_row(["              ", "请勿商用"])
+            print(tb)
+            sys.exit(0)
     #######################################
     try:
         opts, args = getopt.getopt(argv, "-s:-v-a:-d:-S:-t:-P:-D-p:-h:",
