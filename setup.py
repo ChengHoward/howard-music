@@ -11,7 +11,7 @@ except:
 
 setup(
     name='h_music',
-    version='0.1.3',
+    version='0.1.4',
     description='howard music',
     packages=find_packages('src'),
     package_dir={'': 'src'},
@@ -33,7 +33,7 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     keywords='music spider setuptools development',
-    install_requires=['requests', 'bs4'],
+    install_requires=['requests', 'bs4', 'wcwidth', 'hyper', 'pycryptodome'],
     extras_require={},
     package_data={},
     data_files=[],
