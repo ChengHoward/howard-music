@@ -99,6 +99,12 @@ def printFormatError(_TYPE):
         tb.add_row(["无法获取"])
         print(tb)
 
+def out_version():
+    tb = pt.PrettyTable()
+    tb.field_names = ["version", "h_music. 20210309"]
+    tb.add_row(["******", "ipyhub.top"])
+    tb.add_row(["              ", "请勿商用"])
+    print(tb)
 
 def main(**kwargs):
     dataType = ["json", "table"]
@@ -139,15 +145,11 @@ def main(**kwargs):
         print(_HELP_TEXT)
         sys.exit(0)
     else:
-        if not argv[0] in "-s:-v:-a:-d:-S:-t:-D:-p:-h:--help:--version".split(":"):
+        if not argv[0] in "-s:-v:-a:-d:-S:-t:-D:-p:-P:-h:--help:--version:--text:--album:--detail:--source:--type:--download_path:--download:--page".split(":"):
             _SEARCH = argv[0].replace("_", "")
             del argv[0]
         elif argv[0] in "-v:--version".split(":"):
-            tb = pt.PrettyTable()
-            tb.field_names = ["version", "h_music. 20201213"]
-            tb.add_row(["******", "Howardyun.top"])
-            tb.add_row(["              ", "请勿商用"])
-            print(tb)
+            out_version()
             sys.exit(0)
     #######################################
     try:
@@ -159,15 +161,9 @@ def main(**kwargs):
         print(_HELP_TEXT)
         sys.exit(2)
     #######################################
-    # print(opts)
     for opt, arg in opts:
-        # print("opt:%s, arg:%s" % (opt, arg,))
-        if opt == '-v':
-            tb = pt.PrettyTable()
-            tb.field_names = ["version", "h_music. 20201213"]
-            tb.add_row(["******", "Howardyun.top"])
-            tb.add_row(["              ", "请勿商用"])
-            print(tb)
+        if opt in ("-s", "--version"):
+            out_version()
             sys.exit(0)
         elif opt in ("-s", "--text"):
             _SEARCH = arg.replace("_", "")
@@ -182,6 +178,9 @@ def main(**kwargs):
                 sys.exit(0)
             _TYPE = arg
         elif opt in ("-S", "--Source"):
+            if _DETAIL:
+                print("command cannot be used at the same time.")
+                sys.exit(0)
             arg = arg.lower()
             if not arg in source.keys():
                 print("source '%s' does not exist" % arg)
@@ -189,6 +188,9 @@ def main(**kwargs):
             _SOURCE_CLS = source.get(arg)
             _SOURCE_CLS_NAME = arg
         elif opt in ("-d", "--detail"):
+            if _SEARCH:
+                print("command cannot be used at the same time.")
+                sys.exit(0)
             _DETAIL = True
             _DETAIL_TEXT = arg
         elif opt in ("-a", "--album"):
@@ -205,6 +207,7 @@ def main(**kwargs):
                 sys.exit(0)
         else:
             print("command '%s' does not exist" % opt)
+            sys.exit(0)
 
     if _SEARCH is not None:
         data = []
