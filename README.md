@@ -2,11 +2,6 @@
 
 百度、酷狗、酷我、腾讯、网易、咪咕 API
 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/tt20050510/howard-music/develop)
-![PyPI](https://img.shields.io/pypi/v/h-music)
-![GitHub](https://img.shields.io/github/license/tt20050510/howard-music)
-[![Upload Python Package](https://github.com/tt20050510/howard-music/actions/workflows/python-publish.yml/badge.svg)](https://github.com/tt20050510/howard-music/actions/workflows/python-publish.yml)
-
 > 项目仅供学习参考，请勿商用！
 ---
 
