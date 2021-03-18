@@ -42,7 +42,7 @@ D:\>h-music --help
 
 ## 获取API
 
-更多功能请参阅[详细API](https://book.ipyhub.top/yin-le-zhan-shu-ju-api/yin-le-zhan-apipython)
+更多功能请参阅[详细API](https://music.ipyhub.top/)
 
 ```python
 from h_music.Site import QQ
