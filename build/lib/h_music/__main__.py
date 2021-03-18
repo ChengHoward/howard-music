@@ -101,7 +101,7 @@ def printFormatError(_TYPE):
 
 def out_version():
     tb = pt.PrettyTable()
-    tb.field_names = ["version", "h_music. 20210309"]
+    tb.field_names = ["version", "h_music. 0.1.4"]
     tb.add_row(["******", "ipyhub.top"])
     tb.add_row(["              ", "请勿商用"])
     print(tb)
@@ -162,7 +162,7 @@ def main(**kwargs):
         sys.exit(2)
     #######################################
     for opt, arg in opts:
-        if opt in ("-s", "--version"):
+        if opt in ("-v", "--version"):
             out_version()
             sys.exit(0)
         elif opt in ("-s", "--text"):
