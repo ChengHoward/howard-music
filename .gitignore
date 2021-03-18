@@ -1,2 +1,5 @@
 /h_music.egg-info/
 /build/
+/dist/
+/h-music.spec
+/h-music.py
