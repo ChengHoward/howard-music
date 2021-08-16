@@ -118,7 +118,7 @@ def main(**kwargs):
     _DETAIL_TEXT = None
     _PAGE = 1
     _DOWNLOAD = False
-    _DOWNLOAD_PATH = os.path.expanduser('~') + "\\Music\\"
+    _DOWNLOAD_PATH = os.path.join(os.path.expanduser('~'), "Music")
     _MUSIC_DATA = None
     _ALBUM = None
     argv = sys.argv[1:]
